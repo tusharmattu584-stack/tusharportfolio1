@@ -1,0 +1,2659 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Tushar Mattu </title>
+
+  <!-- Google Fonts (Only external resource) -->
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=Space+Grotesk:wght@400;600&display=swap" rel="stylesheet" />
+
+  <style>
+    :root {
+      --bg: #040414;
+      --bg-alt: #080820;
+      --card: #10102b;
+      --card-soft: #141434;
+      --accent-blue: #3b82f6;
+      --accent-purple: #a855f7;
+      --accent-pink: #ec4899;
+      --text-main: #f9fafb;
+      --text-muted: #9ca3af;
+      --border-subtle: rgba(148, 163, 184, 0.24);
+      --shadow-neon: 0 0 30px rgba(59, 130, 246, 0.7),
+                     0 0 50px rgba(168, 85, 247, 0.55);
+      --radius-lg: 18px;
+      --radius-pill: 999px;
+      --transition-fast: 0.25s ease;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 10% 0%, rgba(59, 130, 246, 0.16) 0, transparent 55%),
+        radial-gradient(circle at 90% 100%, rgba(236, 72, 153, 0.13) 0, transparent 55%),
+        radial-gradient(circle at 0% 100%, rgba(168, 85, 247, 0.16) 0, transparent 55%),
+        var(--bg);
+      color: var(--text-main);
+      line-height: 1.6;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* Scrollbar */
+    ::-webkit-scrollbar {
+      width: 8px;
+    }
+    ::-webkit-scrollbar-track {
+      background: rgba(15, 23, 42, 0.6);
+    }
+    ::-webkit-scrollbar-thumb {
+      background: linear-gradient(180deg, var(--accent-blue), var(--accent-pink));
+      border-radius: 999px;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    /* Layout Utilities */
+    .container {
+      width: min(1120px, 100% - 2.5rem);
+      margin-inline: auto;
+    }
+
+    section {
+      padding-block: 5rem;
+      position: relative;
+    }
+
+    .section-header {
+      margin-bottom: 2.5rem;
+    }
+
+    .section-kicker {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.8rem;
+      color: var(--accent-blue);
+      font-weight: 600;
+    }
+
+    .section-title {
+      font-size: clamp(1.9rem, 2.4vw, 2.4rem);
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .section-title span.neon-dot {
+      display: inline-block;
+      width: 9px;
+      height: 9px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent-pink));
+      box-shadow: 0 0 16px rgba(236, 72, 153, 0.9);
+    }
+
+    .section-subtitle {
+      margin-top: 0.6rem;
+      color: var(--text-muted);
+      max-width: 540px;
+      font-size: 0.98rem;
+    }
+
+    /* Nav */
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 50;
+      backdrop-filter: blur(18px);
+      background: linear-gradient(to bottom, rgba(4, 4, 20, 0.96), rgba(4, 4, 20, 0.82));
+      border-bottom: 1px solid rgba(148, 163, 184, 0.1);
+    }
+
+    .nav-wrap {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-block: 0.7rem;
+    }
+
+    .brand {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+    }
+
+    .brand-badge {
+      width: 34px;
+      height: 34px;
+      border-radius: 16px;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent-blue));
+      box-shadow: 0 0 18px rgba(59, 130, 246, 0.9);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-weight: 700;
+      font-size: 1.02rem;
+      color: #020617;
+    }
+
+    .brand-text {
+      display: flex;
+      flex-direction: column;
+      line-height: 1.1;
+    }
+
+    .brand-name {
+      font-size: 1.05rem;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+    }
+
+    .brand-tagline {
+      font-size: 0.72rem;
+      color: var(--text-muted);
+    }
+
+    nav ul {
+      list-style: none;
+      display: flex;
+      gap: 1.2rem;
+      font-size: 0.92rem;
+    }
+
+    nav a {
+      position: relative;
+      padding: 0.2rem 0;
+      color: var(--text-muted);
+      transition: color var(--transition-fast);
+    }
+
+    nav a::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      width: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
+      transition: width var(--transition-fast);
+    }
+
+    nav a:hover {
+      color: #e5e7eb;
+    }
+
+    nav a:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      display: none;
+    }
+
+    @media (min-width: 768px) {
+      .nav-cta {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        font-size: 0.85rem;
+        padding: 0.45rem 0.9rem;
+        border-radius: 999px;
+        background: linear-gradient(120deg, rgba(59, 130, 246, 0.12), rgba(168, 85, 247, 0.12), rgba(236, 72, 153, 0.12));
+        border: 1px solid rgba(148, 163, 184, 0.5);
+        color: #e5e7eb;
+        cursor: pointer;
+        transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast);
+      }
+      .nav-cta span.dot {
+        width: 6px;
+        height: 6px;
+        border-radius: 999px;
+        background: #22c55e;
+        box-shadow: 0 0 10px rgba(34, 197, 94, 0.9);
+      }
+      .nav-cta:hover {
+        transform: translateY(-1px);
+        box-shadow: 0 0 18px rgba(59, 130, 246, 0.35);
+        border-color: rgba(148, 163, 184, 0.8);
+        background: linear-gradient(120deg, rgba(59, 130, 246, 0.2), rgba(168, 85, 247, 0.2), rgba(236, 72, 153, 0.2));
+      }
+    }
+
+    /* Hero / Home */
+    #home {
+      padding-top: 4rem;
+      min-height: calc(100vh - 70px);
+      display: flex;
+      align-items: center;
+    }
+
+    .hero-grid {
+      display: grid;
+      gap: 3rem;
+    }
+
+    @media (min-width: 900px) {
+      .hero-grid {
+        grid-template-columns: minmax(0, 1.3fr) minmax(0, 1fr);
+        align-items: center;
+      }
+    }
+
+    .hero-kicker {
+      text-transform: uppercase;
+      letter-spacing: 0.22em;
+      font-size: 0.78rem;
+      color: var(--accent-purple);
+      font-weight: 600;
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-title {
+      font-size: clamp(2.2rem, 4vw, 3rem);
+      font-weight: 700;
+      letter-spacing: 0.03em;
+      margin-bottom: 0.6rem;
+    }
+
+    .hero-title span.highlight {
+      background: linear-gradient(120deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
+      -webkit-background-clip: text;
+      color: transparent;
+      text-shadow:
+        0 0 25px rgba(59, 130, 246, 0.8),
+        0 0 40px rgba(236, 72, 153, 0.7);
+    }
+
+    .hero-subtitle {
+      color: var(--text-muted);
+      font-size: 0.98rem;
+      max-width: 520px;
+      margin-bottom: 1.6rem;
+    }
+
+    .hero-stats {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-bottom: 1.9rem;
+      font-size: 0.85rem;
+    }
+
+    .hero-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      padding: 0.35rem 0.9rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.75);
+      backdrop-filter: blur(18px);
+    }
+
+    .hero-pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent-blue));
+      box-shadow: 0 0 12px rgba(59, 130, 246, 0.8);
+    }
+
+    .hero-actions {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.9rem;
+      margin-bottom: 2.4rem;
+    }
+
+    .btn-primary,
+    .btn-ghost {
+      font-size: 0.9rem;
+      padding: 0.7rem 1.3rem;
+      border-radius: var(--radius-pill);
+      border: 1px solid transparent;
+      cursor: pointer;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), background var(--transition-fast), border-color var(--transition-fast), color var(--transition-fast);
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: linear-gradient(120deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
+      box-shadow: var(--shadow-neon);
+      color: #020617;
+      font-weight: 600;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px) translateX(0.5px);
+      box-shadow: 0 0 35px rgba(59, 130, 246, 0.95), 0 0 50px rgba(236, 72, 153, 0.9);
+    }
+
+    .btn-ghost {
+      border-color: rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.8);
+      color: #e5e7eb;
+    }
+
+    .btn-ghost:hover {
+      background: rgba(15, 23, 42, 0.95);
+      border-color: rgba(148, 163, 184, 0.9);
+      transform: translateY(-1px);
+      box-shadow: 0 0 20px rgba(148, 163, 184, 0.4);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.2rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .hero-meta-block {
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .hero-meta-label {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.7rem;
+      color: rgba(148, 163, 184, 0.9);
+    }
+
+    .hero-meta-value {
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: 0.92rem;
+    }
+
+    /* Hero Right - Glass Card */
+    .hero-card {
+      position: relative;
+      border-radius: 26px;
+      padding: 1.6rem 1.5rem;
+      background:
+        linear-gradient(145deg, rgba(15, 23, 42, 0.9), rgba(15, 23, 42, 0.7)),
+        radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.4), transparent 60%),
+        radial-gradient(circle at 100% 100%, rgba(236, 72, 153, 0.42), transparent 60%);
+      border: 1px solid rgba(148, 163, 184, 0.38);
+      box-shadow: 0 24px 60px rgba(15, 23, 42, 0.9);
+      overflow: hidden;
+    }
+
+    .hero-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 20% 0%, rgba(148, 163, 184, 0.35), transparent 60%);
+      mix-blend-mode: soft-light;
+      opacity: 0.75;
+      pointer-events: none;
+    }
+
+    .hero-card-title {
+      font-size: 0.9rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      color: rgba(249, 250, 251, 0.88);
+    }
+
+    .hero-card-badges {
+      display: flex;
+      gap: 0.4rem;
+      align-items: center;
+    }
+
+    .pill-mini {
+      border-radius: 999px;
+      padding: 0.2rem 0.6rem;
+      font-size: 0.68rem;
+      background: rgba(15, 23, 42, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      color: rgba(249, 250, 251, 0.88);
+    }
+
+    .hero-card-main {
+      position: relative;
+      z-index: 1;
+    }
+
+    .orbit {
+      position: relative;
+      width: 100%;
+      aspect-ratio: 4 / 3;
+      border-radius: 22px;
+      border: 1px solid rgba(148, 163, 184, 0.45);
+      background: radial-gradient(circle at 30% 20%, rgba(59, 130, 246, 0.5), transparent 55%),
+                  radial-gradient(circle at 80% 80%, rgba(236, 72, 153, 0.5), transparent 55%);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.9);
+    }
+
+    .orbit-center {
+      width: 110px;
+      height: 110px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #fff, #e5e7eb);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-direction: column;
+      text-align: center;
+      color: #020617;
+      box-shadow:
+        0 0 24px rgba(59, 130, 246, 0.7),
+        0 0 38px rgba(236, 72, 153, 0.75);
+      position: relative;
+      z-index: 2;
+    }
+
+    .orbit-center span.main {
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .orbit-center span.sub {
+      font-size: 0.68rem;
+      opacity: 0.75;
+    }
+
+    .orbit-dot {
+      position: absolute;
+      width: 22px;
+      height: 22px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 0.6rem;
+      background: rgba(15, 23, 42, 0.95);
+      color: #e5e7eb;
+      box-shadow: 0 0 22px rgba(59, 130, 246, 0.8);
+    }
+
+    .orbit-dot:nth-child(2) { top: 18%; left: 15%; }
+    .orbit-dot:nth-child(3) { top: 14%; right: 18%; }
+    .orbit-dot:nth-child(4) { bottom: 18%; left: 22%; }
+    .orbit-dot:nth-child(5) { bottom: 12%; right: 16%; }
+
+    .hero-card-footer {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.7rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+      position: relative;
+      z-index: 1;
+    }
+
+    .hero-timeline {
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .hero-timeline-bar {
+      flex: 1;
+      height: 4px;
+      border-radius: 999px;
+      background: linear-gradient(90deg, rgba(148, 163, 184, 0.4), rgba(148, 163, 184, 0.1));
+      overflow: hidden;
+      position: relative;
+    }
+
+    .hero-timeline-bar::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      width: 55%;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
+    }
+
+    .hero-status-pill {
+      border-radius: var(--radius-pill);
+      padding: 0.2rem 0.7rem;
+      border: 1px solid rgba(34, 197, 94, 0.7);
+      background: rgba(22, 163, 74, 0.12);
+      color: #bbf7d0;
+      font-size: 0.72rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .hero-status-dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: #4ade80;
+      box-shadow: 0 0 10px rgba(74, 222, 128, 0.9);
+    }
+
+    /* About */
+    #about .about-layout {
+      display: grid;
+      gap: 2.5rem;
+      align-items: flex-start;
+    }
+
+    @media (min-width: 900px) {
+      #about .about-layout {
+        grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr);
+      }
+    }
+
+    .card {
+      background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.18), transparent 55%),
+                  radial-gradient(circle at 100% 100%, rgba(236, 72, 153, 0.15), transparent 55%),
+                  var(--card);
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border-subtle);
+      padding: 1.4rem 1.5rem;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.85);
+    }
+
+    .about-intro p {
+      font-size: 0.96rem;
+      color: var(--text-muted);
+      margin-bottom: 1.1rem;
+    }
+
+    .about-intro p strong {
+      color: #e5e7eb;
+    }
+
+    .about-list {
+      list-style: none;
+      display: grid;
+      gap: 0.7rem;
+      margin-top: 0.7rem;
+    }
+
+    .about-list li {
+      display: flex;
+      gap: 0.55rem;
+      font-size: 0.9rem;
+      color: var(--text-muted);
+    }
+
+    .about-list li span.bullet {
+      width: 16px;
+      height: 16px;
+      border-radius: 999px;
+      margin-top: 0.22rem;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent-purple));
+      box-shadow: 0 0 14px rgba(168, 85, 247, 0.9);
+      flex-shrink: 0;
+    }
+
+    .about-tags {
+      margin-top: 1.1rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+    }
+
+    .tag {
+      font-size: 0.75rem;
+      padding: 0.3rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.85);
+      color: var(--text-muted);
+    }
+
+    .progress-list {
+      list-style: none;
+      display: grid;
+      gap: 0.85rem;
+      margin-top: 0.5rem;
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    .progress-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .progress-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+    }
+
+    .progress-bar {
+      width: 100%;
+      height: 6px;
+      border-radius: 999px;
+      background: rgba(30, 64, 175, 0.7);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .progress-fill {
+      height: 100%;
+      border-radius: inherit;
+      background: linear-gradient(90deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
+    }
+
+    /* Projects */
+    .projects-grid {
+      display: grid;
+      gap: 1.5rem;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    }
+
+    .project-card {
+      position: relative;
+      padding: 1.2rem 1.2rem 1.4rem;
+      border-radius: var(--radius-lg);
+      background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.18), transparent 60%),
+                  radial-gradient(circle at 100% 100%, rgba(236, 72, 153, 0.18), transparent 60%),
+                  var(--card-soft);
+      border: 1px solid rgba(148, 163, 184, 0.65);
+      cursor: pointer;
+      transition: transform var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast), background var(--transition-fast);
+      overflow: hidden;
+    }
+
+    .project-card::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(circle at 0 0, rgba(248, 250, 252, 0.1), transparent 55%);
+      opacity: 0;
+      transition: opacity var(--transition-fast);
+    }
+
+    .project-card:hover {
+      transform: translateY(-6px) translateX(1px);
+      box-shadow: var(--shadow-neon);
+      border-color: rgba(248, 250, 252, 0.9);
+      background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.3), transparent 65%),
+                  radial-gradient(circle at 100% 100%, rgba(236, 72, 153, 0.3), transparent 65%),
+                  var(--card-soft);
+    }
+
+    .project-card:hover::before {
+      opacity: 1;
+    }
+
+    .project-pill {
+      font-size: 0.68rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+      background: rgba(15, 23, 42, 0.95);
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      color: rgba(209, 213, 219, 0.92);
+      margin-bottom: 0.6rem;
+    }
+
+    .project-pill-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent-blue));
+      box-shadow: 0 0 12px rgba(59, 130, 246, 0.85);
+    }
+
+    .project-title {
+      font-size: 1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .project-meta {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.14em;
+      color: rgba(156, 163, 175, 0.9);
+      margin-bottom: 0.55rem;
+    }
+
+    .project-description {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      margin-bottom: 0.8rem;
+    }
+
+    .project-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: rgba(209, 213, 219, 0.9);
+    }
+
+    .project-tech {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+    }
+
+    .project-tech span {
+      font-size: 0.72rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.6);
+      background: rgba(15, 23, 42, 0.88);
+      color: rgba(209, 213, 219, 0.95);
+    }
+
+    .project-open {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+    }
+
+    .project-open span.icon {
+      font-size: 0.9rem;
+    }
+
+    /* Modal */
+    .modal {
+      position: fixed;
+      inset: 0;
+      display: none;
+      z-index: 60;
+    }
+
+    .modal.active {
+      display: block;
+    }
+
+    .modal-overlay {
+      position: absolute;
+      inset: 0;
+      backdrop-filter: blur(26px);
+      background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.22), transparent 60%),
+                  radial-gradient(circle at 100% 100%, rgba(236, 72, 153, 0.22), transparent 60%),
+                  rgba(15, 23, 42, 0.92);
+    }
+
+    .modal-inner {
+      position: relative;
+      z-index: 1;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 1.5rem;
+    }
+
+    .modal-content {
+      width: min(960px, 100%);
+      max-height: 90vh;
+      border-radius: 24px;
+      background:
+        radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.26), transparent 55%),
+        radial-gradient(circle at 100% 100%, rgba(236, 72, 153, 0.26), transparent 55%),
+        rgba(15, 23, 42, 0.98);
+      border: 1px solid rgba(248, 250, 252, 0.32);
+      box-shadow: 0 30px 90px rgba(15, 23, 42, 0.9);
+      padding: 1.5rem 1.6rem 1.3rem;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 0.6rem;
+      gap: 1rem;
+    }
+
+    .modal-title-wrap {
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+    }
+
+    .modal-kicker {
+      font-size: 0.78rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      color: rgba(156, 163, 175, 0.95);
+    }
+
+    .modal-title {
+      font-size: 1.05rem;
+      font-weight: 600;
+    }
+
+    .modal-subtitle {
+      font-size: 0.82rem;
+      color: rgba(156, 163, 175, 0.95);
+    }
+
+    .modal-close {
+      border: none;
+      outline: none;
+      cursor: pointer;
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: rgba(15, 23, 42, 0.9);
+      color: rgba(248, 250, 252, 0.9);
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.25rem;
+      transition: transform var(--transition-fast), background var(--transition-fast), box-shadow var(--transition-fast), border-color var(--transition-fast);
+    }
+
+    .modal-close:hover {
+      background: rgba(30, 64, 175, 0.95);
+      border-color: rgba(248, 250, 252, 0.9);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.9);
+      transform: translateY(-1px);
+    }
+
+    .modal-body {
+      flex: 1;
+      margin-top: 0.8rem;
+      padding-top: 0.5rem;
+      padding-bottom: 0.6rem;
+      overflow: auto;
+      border-radius: 16px;
+      background: radial-gradient(circle at 0 0, rgba(15, 23, 42, 0.95), rgba(15, 23, 42, 0.85));
+      border: 1px solid rgba(148, 163, 184, 0.5);
+      padding-inline: 1.1rem;
+    }
+
+    .modal-footer {
+      margin-top: 0.8rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: rgba(156, 163, 175, 0.96);
+      gap: 0.8rem;
+      flex-wrap: wrap;
+    }
+
+    .modal-footer span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.3rem;
+    }
+
+    .modal-footer span.badge {
+      padding: 0.2rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+    }
+
+    .modal-footer .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent-pink));
+      box-shadow: 0 0 12px rgba(236, 72, 153, 0.9);
+    }
+
+    /* Project Inner Layouts */
+    .project-inner {
+      padding-block: 1rem 1.4rem;
+      display: grid;
+      gap: 1rem;
+    }
+
+    /* Tic Tac Toe */
+    .ttt-layout {
+      display: grid;
+      gap: 1rem;
+    }
+
+    @media (min-width: 760px) {
+      .ttt-layout {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+        align-items: center;
+      }
+    }
+
+    .ttt-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0.5rem;
+      max-width: 260px;
+      margin-inline: auto;
+    }
+
+    .ttt-cell {
+      width: 80px;
+      height: 80px;
+      border-radius: 18px;
+      border: 1px solid rgba(148, 163, 184, 0.75);
+      background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.34), transparent 60%),
+                  radial-gradient(circle at 100% 100%, rgba(236, 72, 153, 0.34), transparent 60%),
+                  rgba(15, 23, 42, 0.95);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 700;
+      cursor: pointer;
+      box-shadow: 0 12px 32px rgba(15, 23, 42, 0.85);
+      transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease, background 0.18s ease;
+    }
+
+    .ttt-cell:hover {
+      transform: translateY(-2px);
+      border-color: rgba(248, 250, 252, 0.9);
+      box-shadow: 0 0 28px rgba(59, 130, 246, 0.9);
+    }
+
+    .ttt-status {
+      font-size: 0.9rem;
+      color: rgba(209, 213, 219, 0.98);
+      margin-bottom: 0.6rem;
+    }
+
+    .ttt-controls {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-top: 0.4rem;
+      font-size: 0.83rem;
+    }
+
+    .btn-small {
+      border-radius: 999px;
+      padding: 0.3rem 0.8rem;
+      border: 1px solid rgba(148, 163, 184, 0.85);
+      background: rgba(15, 23, 42, 0.95);
+      color: rgba(248, 250, 252, 0.98);
+      cursor: pointer;
+      font-size: 0.78rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+      transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+    }
+
+    .btn-small:hover {
+      background: rgba(30, 64, 175, 0.92);
+      border-color: rgba(248, 250, 252, 0.95);
+      box-shadow: 0 0 22px rgba(59, 130, 246, 0.9);
+      transform: translateY(-1px);
+    }
+
+    .ttt-info {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+      max-width: 460px;
+    }
+
+    .ttt-badges {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-top: 0.6rem;
+    }
+
+    .ttt-badge {
+      font-size: 0.75rem;
+      padding: 0.24rem 0.65rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.7);
+      background: rgba(15, 23, 42, 0.9);
+      color: rgba(209, 213, 219, 0.96);
+    }
+
+    /* Image Slider */
+    .slider-layout {
+      display: grid;
+      gap: 1rem;
+    }
+
+    @media (min-width: 760px) {
+      .slider-layout {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+        align-items: center;
+      }
+    }
+
+    .slider-frame {
+      border-radius: 20px;
+      border: 1px solid rgba(148, 163, 184, 0.75);
+      padding: 0.8rem;
+      background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.26), transparent 60%),
+                  radial-gradient(circle at 100% 100%, rgba(236, 72, 153, 0.26), transparent 60%),
+                  rgba(15, 23, 42, 0.96);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
+    }
+
+    .slider-window {
+      position: relative;
+      overflow: hidden;
+      border-radius: 16px;
+      height: 220px;
+      display: flex;
+      align-items: stretch;
+    }
+
+    .slider-track {
+      display: flex;
+      transition: transform 0.45s cubic-bezier(0.23, 1, 0.32, 1);
+      width: 100%;
+      height: 100%;
+    }
+
+    .slide {
+      min-width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+      padding: 1.4rem;
+      text-align: center;
+      color: #f9fafb;
+    }
+
+    .slide-bg {
+      position: absolute;
+      inset: 0;
+      background-size: 200% 200%;
+      background-position: 0% 0%;
+      filter: blur(2px);
+      opacity: 0.9;
+    }
+
+    .slide-1 .slide-bg {
+      background-image: linear-gradient(135deg, #1e40af, #22c55e, #0ea5e9);
+    }
+
+    .slide-2 .slide-bg {
+      background-image: linear-gradient(135deg, #7c3aed, #2563eb, #f97316);
+    }
+
+    .slide-3 .slide-bg {
+      background-image: linear-gradient(135deg, #db2777, #eab308, #3b82f6);
+    }
+
+    .slide-content {
+      position: relative;
+      z-index: 1;
+      max-width: 380px;
+    }
+
+    .slide-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.2rem;
+    }
+
+    .slide-text {
+      font-size: 0.9rem;
+      opacity: 0.96;
+    }
+
+    .slide-tag {
+      font-size: 0.75rem;
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      opacity: 0.9;
+      margin-bottom: 0.4rem;
+    }
+
+    .slider-controls {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 0.7rem;
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    .slider-dots {
+      display: flex;
+      gap: 0.35rem;
+    }
+
+    .slider-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 999px;
+      border: 1px solid rgba(209, 213, 219, 0.8);
+      background: transparent;
+      transition: background 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .slider-dot.active {
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent-pink));
+      box-shadow: 0 0 16px rgba(236, 72, 153, 0.9);
+      transform: scale(1.1);
+    }
+
+    /* Calculator */
+    .calc-layout {
+      display: grid;
+      gap: 1rem;
+    }
+
+    @media (min-width: 760px) {
+      .calc-layout {
+        grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+        align-items: center;
+      }
+    }
+
+    .calculator {
+      max-width: 280px;
+      margin-inline: auto;
+      border-radius: 20px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.3), transparent 55%),
+                  radial-gradient(circle at 100% 100%, rgba(236, 72, 153, 0.3), transparent 55%),
+                  rgba(15, 23, 42, 0.96);
+      padding: 1rem;
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.9);
+      display: grid;
+      gap: 0.6rem;
+    }
+
+    .calc-display {
+      height: 56px;
+      border-radius: 16px;
+      padding: 0.4rem 0.8rem;
+      background: rgba(15, 23, 42, 0.98);
+      border: 1px solid rgba(148, 163, 184, 0.85);
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: flex-end;
+      font-family: "Space Grotesk", system-ui, sans-serif;
+    }
+
+    .calc-expression {
+      font-size: 0.78rem;
+      color: rgba(148, 163, 184, 0.96);
+      min-height: 1rem;
+    }
+
+    .calc-result {
+      font-size: 1.25rem;
+      color: #f9fafb;
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 0.4rem;
+    }
+
+    .calc-btn {
+      height: 44px;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.8);
+      background: rgba(15, 23, 42, 0.96);
+      color: #e5e7eb;
+      font-size: 0.9rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease, background 0.12s ease;
+    }
+
+    .calc-btn.operator {
+      background: rgba(30, 64, 175, 0.9);
+      border-color: rgba(191, 219, 254, 0.95);
+    }
+
+    .calc-btn.equal {
+      background: linear-gradient(120deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
+      border-color: rgba(248, 250, 252, 0.95);
+      color: #020617;
+      font-weight: 600;
+      box-shadow: 0 0 22px rgba(236, 72, 153, 0.9);
+    }
+
+    .calc-btn.wide {
+      grid-column: span 2;
+    }
+
+    .calc-btn:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 0 18px rgba(59, 130, 246, 0.9);
+      border-color: rgba(248, 250, 252, 0.9);
+    }
+
+    .calc-info {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    /* Digital Clock */
+    .clock-layout {
+      display: grid;
+      gap: 1.2rem;
+    }
+
+    @media (min-width: 760px) {
+      .clock-layout {
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+        align-items: center;
+      }
+    }
+
+    .clock-screen {
+      max-width: 320px;
+      margin-inline: auto;
+      border-radius: 22px;
+      padding: 1.2rem 1.1rem;
+      background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.3), transparent 55%),
+                  radial-gradient(circle at 100% 100%, rgba(236, 72, 153, 0.3), transparent 55%),
+                  rgba(15, 23, 42, 0.96);
+      border: 1px solid rgba(148, 163, 184, 0.85);
+      box-shadow: 0 20px 50px rgba(15, 23, 42, 0.92);
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .clock-label-row {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.75rem;
+      color: rgba(156, 163, 175, 0.9);
+    }
+
+    .clock-main {
+      font-family: "Space Grotesk", system-ui, sans-serif;
+      font-size: 2rem;
+      font-weight: 600;
+      letter-spacing: 0.16em;
+      text-align: center;
+      padding: 0.6rem 0.4rem 0.5rem;
+      border-radius: 16px;
+      background: rgba(15, 23, 42, 0.98);
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      text-shadow: 0 0 18px rgba(59, 130, 246, 0.96);
+    }
+
+    .clock-sub {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.8rem;
+      color: rgba(209, 213, 219, 0.96);
+    }
+
+    .clock-badge {
+      padding: 0.16rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.9);
+      font-size: 0.73rem;
+    }
+
+    .clock-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 12px rgba(34, 197, 94, 0.9);
+    }
+
+    .clock-info {
+      font-size: 0.86rem;
+      color: var(--text-muted);
+    }
+
+    /* Gurukulam Hub */
+    .gurukulam-layout {
+      display: grid;
+      gap: 1.2rem;
+    }
+
+    @media (min-width: 880px) {
+      .gurukulam-layout {
+        grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.9fr);
+        align-items: flex-start;
+      }
+    }
+
+    .gurukulam-hero {
+      border-radius: 20px;
+      background: radial-gradient(circle at 0 0, rgba(59, 130, 246, 0.32), transparent 60%),
+                  radial-gradient(circle at 100% 100%, rgba(236, 72, 153, 0.32), transparent 60%),
+                  rgba(15, 23, 42, 0.97);
+      border: 1px solid rgba(148, 163, 184, 0.85);
+      padding: 1.2rem 1.25rem;
+      box-shadow: 0 22px 55px rgba(15, 23, 42, 0.92);
+    }
+
+    .gurukulam-title {
+      font-size: 1.1rem;
+      font-weight: 600;
+      margin-bottom: 0.25rem;
+    }
+
+    .gurukulam-tagline {
+      font-size: 0.88rem;
+      color: rgba(209, 213, 219, 0.97);
+      margin-bottom: 0.8rem;
+    }
+
+    .gurukulam-meta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.45rem;
+      margin-bottom: 0.7rem;
+      font-size: 0.74rem;
+    }
+
+    .gurukulam-pill {
+      padding: 0.22rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.85);
+      background: rgba(15, 23, 42, 0.9);
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: rgba(209, 213, 219, 0.96);
+    }
+
+    .gurukulam-grid {
+      display: grid;
+      gap: 0.8rem;
+      margin-top: 0.9rem;
+    }
+
+    @media (min-width: 600px) {
+      .gurukulam-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+    }
+
+    .gurukulam-card {
+      border-radius: 16px;
+      padding: 0.8rem 0.85rem;
+      border: 1px solid rgba(148, 163, 184, 0.85);
+      background: rgba(15, 23, 42, 0.96);
+      font-size: 0.82rem;
+      color: rgba(209, 213, 219, 0.98);
+      display: flex;
+      flex-direction: column;
+      gap: 0.2rem;
+    }
+
+    .gurukulam-card span.label {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.7rem;
+      color: rgba(148, 163, 184, 0.96);
+    }
+
+    .gurukulam-card span.value {
+      font-size: 0.88rem;
+    }
+
+    .gurukulam-filters {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      margin-bottom: 0.6rem;
+      font-size: 0.8rem;
+    }
+
+    .filter-btn {
+      padding: 0.25rem 0.8rem;
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.75);
+      background: rgba(15, 23, 42, 0.96);
+      color: rgba(209, 213, 219, 0.98);
+      cursor: pointer;
+      font-size: 0.76rem;
+      transition: background 0.18s ease, border-color 0.18s ease, transform 0.18s ease, box-shadow 0.18s ease;
+    }
+
+    .filter-btn.active {
+      background: linear-gradient(120deg, var(--accent-blue), var(--accent-purple), var(--accent-pink));
+      border-color: rgba(248, 250, 252, 0.95);
+      color: #020617;
+      box-shadow: 0 0 22px rgba(59, 130, 246, 0.9);
+      transform: translateY(-1px);
+    }
+
+    .gurukulam-course-list {
+      list-style: none;
+      display: grid;
+      gap: 0.45rem;
+      font-size: 0.82rem;
+      color: var(--text-muted);
+    }
+
+    .gurukulam-course-list li {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .gurukulam-bullet {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent-blue));
+      box-shadow: 0 0 12px rgba(59, 130, 246, 0.9);
+    }
+
+    /* Contact */
+    .contact-layout {
+      display: grid;
+      gap: 2rem;
+    }
+
+    @media (min-width: 860px) {
+      .contact-layout {
+        grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.95fr);
+        align-items: flex-start;
+      }
+    }
+
+    .contact-highlight {
+      font-size: 0.95rem;
+      color: var(--text-muted);
+      margin-bottom: 1rem;
+    }
+
+    .contact-info-block {
+      display: grid;
+      gap: 0.7rem;
+      font-size: 0.88rem;
+      color: rgba(209, 213, 219, 0.98);
+    }
+
+    .contact-info-item {
+      display: flex;
+      flex-direction: column;
+      gap: 0.18rem;
+    }
+
+    .contact-label {
+      text-transform: uppercase;
+      letter-spacing: 0.16em;
+      font-size: 0.72rem;
+      color: rgba(148, 163, 184, 0.96);
+    }
+
+    .contact-detail {
+      font-family: "Space Grotesk", system-ui, sans-serif;
+    }
+
+    .contact-note {
+      font-size: 0.8rem;
+      color: var(--text-muted);
+    }
+
+    form.contact-form {
+      display: grid;
+      gap: 0.8rem;
+    }
+
+    .field-group {
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+      font-size: 0.86rem;
+    }
+
+    .field-label {
+      font-size: 0.8rem;
+      color: rgba(209, 213, 219, 0.96);
+    }
+
+    .field-label span.req {
+      color: var(--accent-pink);
+    }
+
+    .field-input,
+    .field-textarea {
+      border-radius: 999px;
+      border: 1px solid rgba(148, 163, 184, 0.65);
+      background: rgba(15, 23, 42, 0.95);
+      padding: 0.55rem 0.9rem;
+      outline: none;
+      color: #f9fafb;
+      font-size: 0.86rem;
+      font-family: inherit;
+      transition: border-color 0.18s ease, box-shadow 0.18s ease, background 0.18s ease;
+    }
+
+    .field-textarea {
+      border-radius: 16px;
+      min-height: 110px;
+      resize: vertical;
+      padding-top: 0.6rem;
+    }
+
+    .field-input::placeholder,
+    .field-textarea::placeholder {
+      color: rgba(148, 163, 184, 0.85);
+    }
+
+    .field-input:focus,
+    .field-textarea:focus {
+      border-color: rgba(248, 250, 252, 0.95);
+      box-shadow: 0 0 20px rgba(59, 130, 246, 0.9);
+      background: rgba(15, 23, 42, 0.98);
+    }
+
+    .form-footer {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 0.78rem;
+      color: var(--text-muted);
+      margin-top: 0.4rem;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    /* Footer */
+    footer {
+      border-top: 1px solid rgba(148, 163, 184, 0.25);
+      padding-block: 1.2rem 1.6rem;
+      font-size: 0.78rem;
+      color: rgba(148, 163, 184, 0.96);
+    }
+
+    .footer-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      gap: 0.6rem;
+      flex-wrap: wrap;
+    }
+
+    .footer-left span {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .footer-dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 30%, #fff, var(--accent-purple));
+      box-shadow: 0 0 14px rgba(168, 85, 247, 0.9);
+    }
+
+    .footer-right {
+      display: flex;
+      gap: 0.65rem;
+      flex-wrap: wrap;
+    }
+
+    /* Scroll Reveal */
+    .reveal {
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+
+    .reveal.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @media (max-width: 640px) {
+      .hero-title {
+        font-size: 2.1rem;
+      }
+      header .nav-wrap {
+        flex-wrap: wrap;
+        gap: 0.8rem;
+      }
+      nav ul {
+        font-size: 0.88rem;
+        gap: 0.8rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <!-- Header / Nav -->
+  <header>
+    <div class="container nav-wrap">
+      <div class="brand">
+        <div class="brand-badge">TM</div>
+        <div class="brand-text">
+          <span class="brand-name">Tushar&nbsp;Mattu</span>
+          <span class="brand-tagline">Digital Portfolio</span>
+        </div>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="#home">Home</a></li>
+          <li><a href="#about">About</a></li>
+          <li><a href="#projects">Projects</a></li>
+          <li><a href="#contact">Contact</a></li>
+        </ul>
+      </nav>
+    
+     
+      </button>
+    </div>
+  </header>
+
+  <!-- Home -->
+  <section id="home">
+    <div class="container hero-grid">
+      <div class="hero-left reveal">
+        <div class="hero-kicker">Focused · Consistent · Curious</div>
+        <h1 class="hero-title">
+          Hi, I'm <span class="highlight">Tushar&nbsp;Mattu</span><br />
+        </h1>
+        <p class="hero-subtitle">
+          I am a passionate student and beginner web developer, learning to turn ideas into clean, functional websites and mini-projects. I balance my studies with hands-on practice so I can grow into a confident, industry-ready developer.
+        </p>
+
+        <div class="hero-stats">
+          <div class="hero-pill">
+            <span class="hero-pill-dot"></span>
+            <span>HTML · CSS · JavaScript</span>
+          </div>
+          <div class="hero-pill">
+            <span class="hero-pill-dot"></span>
+            <span>Mini-projects: games, tools & UI</span>
+          </div>
+        </div>
+
+        <div class="hero-actions">
+          <a href="#projects" class="btn-primary">
+            <span>View Interactive Projects</span>
+            <span>↗</span>
+          </a>
+          <a href="#contact" class="btn-ghost">
+            <span>Contact Me</span>
+          </a>
+        </div>
+
+        <div class="hero-meta">
+          <div class="hero-meta-block">
+            <span class="hero-meta-label">Mindset</span>
+            <span class="hero-meta-value">Consistent learner · Exam-ready · Detail-focused</span>
+          </div>
+          <div class="hero-meta-block">
+            <span class="hero-meta-label">Current Focus</span>
+            <span class="hero-meta-value">Building real projects & strong fundamentals</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="hero-right reveal">
+        <div class="hero-card">
+          
+          <div class="hero-card-main">
+            <div class="orbit">
+              <div class="orbit-center">
+                <img src="" alt="">
+              </div>
+              <div class="orbit-dot">JS</div>
+              <div class="orbit-dot">UI</div>
+              <div class="orbit-dot">Logic</div>
+              <div class="orbit-dot">Web</div>
+            </div>
+          </div>
+
+         
+            
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- About -->
+  <section id="about">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-kicker">About Me</div>
+        <h2 class="section-title">
+          Who I am
+          <span class="neon-dot"></span>
+        </h2>
+        <p class="section-subtitle">
+          A quick overview of my mindset, passions and how I combine studies with real project work.
+        </p>
+      </div>
+
+      <div class="about-layout">
+        <div class="card about-intro reveal">
+          <p>
+            I'm <strong>Tushar Mattu</strong>, a dedicated student and an aspiring web developer who enjoys learning step-by-step and building real things with code. I take my <strong>studies seriously</strong> and believe that strong fundamentals in logic, math and programming are the base for everything I create.
+          </p>
+          <p>
+            I'm especially passionate about <strong>front-end development</strong>: turning ideas into interactive pages, experimenting with layout, animation and user experience. I constantly practice by building mini-projects like games, calculators and clocks.
+          </p>
+          <p>
+            My goal is to keep improving daily, learn modern tools and one day contribute to full-scale platforms that help people learn and grow — just like my major project, <strong>Gurukulam Hub</strong>.
+          </p>
+
+          <ul class="about-list">
+            <li>
+              <span class="bullet"></span>
+              <div><strong>Growth focused:</strong> I learn from mistakes, refactor my code and keep improving design and logic.</div>
+            </li>
+            <li>
+              <span class="bullet"></span>
+              <div><strong>Balanced:</strong> I manage my exam preparation and project work together instead of choosing only one.</div>
+            </li>
+            <li>
+              <span class="bullet"></span>
+              <div><strong>Curious:</strong> I like understanding how things work under the hood, not just copying code.</div>
+            </li>
+          </ul>
+
+          <div class="about-tags">
+            <span class="tag">Student Developer</span>
+            <span class="tag">Problem Solver</span>
+            <span class="tag">Clean UI Lover</span>
+            <span class="tag">Always Learning</span>
+          </div>
+        </div>
+
+        <div class="card reveal">
+          <h3 style="font-size:0.98rem;margin-bottom:0.4rem;">Skills & Goals</h3>
+          <p style="font-size:0.86rem;color:var(--text-muted);margin-bottom:0.7rem;">
+            I am building strong foundations in core web technologies and sharpening my thinking with small, focused projects.
+          </p>
+
+          <ul class="progress-list">
+            <li class="progress-item">
+              <div class="progress-top">
+                <span>HTML & Page Structure</span>
+                <span>Solid base</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width:78%;"></div>
+              </div>
+            </li>
+            <li class="progress-item">
+              <div class="progress-top">
+                <span>CSS, Layout & Neon UI</span>
+                <span>Improving fast</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width:72%;"></div>
+              </div>
+            </li>
+            <li class="progress-item">
+              <div class="progress-top">
+                <span>JavaScript Logic & Games</span>
+                <span>Hands-on</span>
+              </div>
+              <div class="progress-bar">
+                <div class="progress-fill" style="width:68%;"></div>
+              </div>
+            </li>
+          </ul>
+
+          <p style="font-size:0.86rem;color:var(--text-muted);margin-top:0.9rem;">
+            <strong>Short-term goal:</strong> write clean, readable code for every project I submit in class and understand each line.
+          </p>
+          <p style="font-size:0.86rem;color:var(--text-muted);margin-top:0.3rem;">
+            <strong>Long-term goal:</strong> grow into a developer who can design and build full learning platforms, handle real-world problems and keep shipping meaningful projects.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Projects -->
+  <section id="projects">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-kicker">Interactive Work</div>
+        <h2 class="section-title">
+          Projects I built
+          <span class="neon-dot"></span>
+        </h2>
+        <p class="section-subtitle">
+          All projects open in a full-screen, dark modal. You can test each one live – from mini-games and tools to my major education platform concept.
+        </p>
+      </div>
+
+      <div class="projects-grid">
+        <!-- Tic Tac Toe -->
+        <article class="project-card reveal" data-project="tic-tac-toe">
+          <div class="project-pill">
+            <span class="project-pill-dot"></span>
+            <span>Mini Project</span>
+          </div>
+          <h3 class="project-title">Tic Tac Toe Game</h3>
+          <div class="project-meta">HTML · CSS · JavaScript</div>
+          <p class="project-description">
+            A classic 3x3 Tic Tac Toe game for two players with live status, reset and simple logic for checking wins and draws.
+          </p>
+          <div class="project-footer">
+            <div class="project-tech">
+              <span>Grid layout</span>
+              <span>Game logic</span>
+            </div>
+            <div class="project-open">
+              <span class="icon">⤴</span>
+              <span>Open live</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Image Slider -->
+        <article class="project-card reveal" data-project="image-slider">
+          <div class="project-pill">
+            <span class="project-pill-dot"></span>
+            <span>Mini Project</span>
+          </div>
+          <h3 class="project-title">Neon Image Slider</h3>
+          <div class="project-meta">HTML · CSS · JavaScript</div>
+          <p class="project-description">
+            A smooth, swipe-style image slider with colorful gradient cards and dot indicators to show the active slide.
+          </p>
+          <div class="project-footer">
+            <div class="project-tech">
+              <span>Slider logic</span>
+              <span>Transitions</span>
+            </div>
+            <div class="project-open">
+              <span class="icon">⤴</span>
+              <span>Open live</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Calculator -->
+        <article class="project-card reveal" data-project="calculator">
+          <div class="project-pill">
+            <span class="project-pill-dot"></span>
+            <span>Mini Project</span>
+          </div>
+          <h3 class="project-title">Smart Calculator</h3>
+          <div class="project-meta">HTML · CSS · JavaScript</div>
+          <p class="project-description">
+            A responsive calculator with a neon screen, operators and clear buttons – built to practice JS expressions and events.
+          </p>
+          <div class="project-footer">
+            <div class="project-tech">
+              <span>Keyboard-style UI</span>
+              <span>Expression parser</span>
+            </div>
+            <div class="project-open">
+              <span class="icon">⤴</span>
+              <span>Open live</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Digital Clock -->
+        <article class="project-card reveal" data-project="digital-clock">
+          <div class="project-pill">
+            <span class="project-pill-dot"></span>
+            <span>Mini Project</span>
+          </div>
+          <h3 class="project-title">Digital Clock</h3>
+          <div class="project-meta">HTML · CSS · JavaScript</div>
+          <p class="project-description">
+            A real-time digital clock that updates every second and displays hours, minutes, seconds and date in a neon layout.
+          </p>
+          <div class="project-footer">
+            <div class="project-tech">
+              <span>setInterval</span>
+              <span>Time formatting</span>
+            </div>
+            <div class="project-open">
+              <span class="icon">⤴</span>
+              <span>Open live</span>
+            </div>
+          </div>
+        </article>
+
+        <!-- Gurukulam Hub -->
+        <article class="project-card reveal" data-project="gurukulam-hub">
+          <div class="project-pill">
+            <span class="project-pill-dot"></span>
+            <span>Major Project</span>
+          </div>
+          <h3 class="project-title">Gurukulam Hub · Education Center</h3>
+          <a href="gurukumal.html"></a>
+          <botton onclick= a href="gurukumal"></botton>
+          </div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- Contact -->
+  <section id="contact">
+    <div class="container">
+      <div class="section-header reveal">
+        <div class="section-kicker">Get in touch</div>
+        <h2 class="section-title">
+          Let's connect
+          <span class="neon-dot"></span>
+        </h2>
+        <p class="section-subtitle">
+          Whether it's feedback on my projects, collaboration, or an opportunity to learn – I'm happy to hear from you.
+        </p>
+      </div>
+
+      <div class="contact-layout">
+        <div class="card reveal">
+          <p class="contact-highlight">
+            I read messages carefully and reply with the same seriousness I bring to my studies and project work.
+          </p>
+
+          <div class="contact-info-block">
+            <div class="contact-info-item">
+              <span class="contact-label">Primary email</span>
+              <span class="contact-detail">tusharvalmiki584@gmail.com</span>
+            </div>
+            <div class="contact-info-item">
+              <span class="contact-label">Best way to contact</span>
+              <span class="contact-detail">Send a detailed email or use the form with your message.</span>
+            </div>
+          </div>
+
+          <p class="contact-note">
+            Please mention the context (exam, portfolio review, internship, doubt, etc.) so I can reply clearly and helpfully.
+          </p>
+        </div>
+
+        <div class="card reveal">
+          <form class="contact-form" id="contactForm">
+            <div class="field-group">
+              <label class="field-label" for="name">
+                Name <span class="req">*</span>
+              </label>
+              <input type="text" id="name" class="field-input" placeholder="Enter your name" required />
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="email">
+                Email <span class="req">*</span>
+              </label>
+              <input type="email" id="email" class="field-input" placeholder="Enter your email" required />
+            </div>
+
+            <div class="field-group">
+              <label class="field-label" for="message">
+                Message <span class="req">*</span>
+              </label>
+              <textarea id="message" class="field-textarea" placeholder="Write your message here..." required></textarea>
+            </div>
+
+            <button type="submit" class="btn-primary" style="border:none;align-self:flex-start;">
+              <span>Send Message</span>
+              <span>✉</span>
+            </button>
+
+            <div class="form-footer">
+              <span>Form submits show a confirmation alert (no backend needed).</span>
+              <span>Fields are required for a clean, professional demo.</span>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="container footer-row">
+      <div class="footer-left">
+        <span>
+          <span class="footer-dot"></span>
+          <span>&copy; 2025&nbsp;Tushar&nbsp;Mattu. All rights reserved.</span>
+        </span>
+      </div>
+      <div class="footer-right">
+        <span>Built with HTML · CSS · JavaScript</span>
+        <span>Dark neon · Exam-ready portfolio</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- Modal (Projects) -->
+  <div class="modal" id="projectModal">
+    <div class="modal-overlay" data-close="modal"></div>
+    <div class="modal-inner">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title-wrap">
+            <div class="modal-kicker" id="modalKicker">Project</div>
+            <div class="modal-title" id="modalTitle">Title</div>
+            <div class="modal-subtitle" id="modalSubtitle">Subtitle</div>
+          </div>
+          <button class="modal-close" data-close="modal" aria-label="Close project">
+            &times;
+          </button>
+        </div>
+        <div class="modal-body" id="modalBody">
+          <!-- Dynamic project content -->
+        </div>
+        <div class="modal-footer">
+          <span class="badge">
+            <span class="dot"></span>
+            <span id="modalTech">HTML · CSS · JavaScript</span>
+          </span>
+          <span id="modalNote">Fully functional demo inside this modal window.</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Templates for project content (hidden) -->
+  <template id="tpl-tic-tac-toe">
+    <div class="project-inner">
+      <div class="ttt-layout">
+        <div>
+          <div class="ttt-status" id="tttStatus">Player X's turn</div>
+          <div class="ttt-grid" id="tttGrid">
+            <button class="ttt-cell" data-index="0"></button>
+            <button class="ttt-cell" data-index="1"></button>
+            <button class="ttt-cell" data-index="2"></button>
+            <button class="ttt-cell" data-index="3"></button>
+            <button class="ttt-cell" data-index="4"></button>
+            <button class="ttt-cell" data-index="5"></button>
+            <button class="ttt-cell" data-index="6"></button>
+            <button class="ttt-cell" data-index="7"></button>
+            <button class="ttt-cell" data-index="8"></button>
+          </div>
+          <div class="ttt-controls">
+            <button class="btn-small" id="tttReset">↺ Reset game</button>
+          </div>
+        </div>
+        <div>
+          <div class="ttt-info">
+            This is a simple 2-player Tic Tac Toe built with vanilla JavaScript. It:
+            <ul style="margin-top:0.5rem;padding-left:1rem;list-style:square;">
+              <li>Tracks each player's turn.</li>
+              <li>Detects wins on rows, columns and diagonals.</li>
+              <li>Shows a draw message when the board is full.</li>
+            </ul>
+            <div class="ttt-badges">
+              <span class="ttt-badge">Practice: game logic</span>
+              <span class="ttt-badge">Focus: clean UI</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="tpl-image-slider">
+    <div class="project-inner">
+      <div class="slider-layout">
+        <div class="slider-frame">
+          <div class="slider-window">
+            <div class="slider-track" id="sliderTrack">
+              <div class="slide slide-1">
+                <div class="slide-bg"></div>
+                <div class="slide-content">
+                  <div class="slide-tag">Slide 1 · Focus mode</div>
+                  <div class="slide-title">Study Desk Setup</div>
+                  <div class="slide-text">
+                    Clean, distraction-free space for coding, reading and revision.
+                  </div>
+                </div>
+              </div>
+              <div class="slide slide-2">
+                <div class="slide-bg"></div>
+                <div class="slide-content">
+                  <div class="slide-tag">Slide 2 · Learning</div>
+                  <div class="slide-title">Web Development Practice</div>
+                  <div class="slide-text">
+                    Daily practice sessions with HTML, CSS and JavaScript mini-projects.
+                  </div>
+                </div>
+              </div>
+              <div class="slide slide-3">
+                <div class="slide-bg"></div>
+                <div class="slide-content">
+                  <div class="slide-tag">Slide 3 · Growth</div>
+                  <div class="slide-title">Exam & Project Balance</div>
+                  <div class="slide-text">
+                    Consistent progress in both academic preparation and portfolio building.
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="slider-controls">
+            <div>
+              <button class="btn-small" id="sliderPrev">← Prev</button>
+              <button class="btn-small" id="sliderNext">Next →</button>
+            </div>
+            <div class="slider-dots" id="sliderDots">
+              <button class="slider-dot" data-index="0"></button>
+              <button class="slider-dot" data-index="1"></button>
+              <button class="slider-dot" data-index="2"></button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div class="ttt-info">
+            This slider uses a simple JavaScript function to move a track of slides left and right.
+            <ul style="margin-top:0.5rem;padding-left:1rem;list-style:square;">
+              <li>Each slide is a colorful gradient card with text.</li>
+              <li>Dots update to show the active slide.</li>
+              <li>Buttons move the slider backward or forward.</li>
+            </ul>
+            <div class="ttt-badges">
+              <span class="ttt-badge">Practice: animations</span>
+              <span class="ttt-badge">Focus: user experience</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="tpl-calculator">
+    <div class="project-inner">
+      <div class="calc-layout">
+        <div class="calculator" id="calculator">
+          <div class="calc-display">
+            <div class="calc-expression" id="calcExpression"></div>
+            <div class="calc-result" id="calcResult">0</div>
+          </div>
+          <div class="calc-grid">
+            <button class="calc-btn wide" data-key="C">C</button>
+            <button class="calc-btn" data-key="DEL">⌫</button>
+            <button class="calc-btn operator" data-key="/">÷</button>
+
+            <button class="calc-btn" data-key="7">7</button>
+            <button class="calc-btn" data-key="8">8</button>
+            <button class="calc-btn" data-key="9">9</button>
+            <button class="calc-btn operator" data-key="*">×</button>
+
+            <button class="calc-btn" data-key="4">4</button>
+            <button class="calc-btn" data-key="5">5</button>
+            <button class="calc-btn" data-key="6">6</button>
+            <button class="calc-btn operator" data-key="-">−</button>
+
+            <button class="calc-btn" data-key="1">1</button>
+            <button class="calc-btn" data-key="2">2</button>
+            <button class="calc-btn" data-key="3">3</button>
+            <button class="calc-btn operator" data-key="+">+</button>
+
+            <button class="calc-btn wide" data-key="0">0</button>
+            <button class="calc-btn" data-key=".">.</button>
+            <button class="calc-btn equal" data-key="=">=</button>
+          </div>
+        </div>
+        <div class="calc-info">
+          This calculator supports:
+          <ul style="margin-top:0.5rem;padding-left:1rem;list-style:square;">
+            <li>Basic operations: addition, subtraction, multiplication and division.</li>
+            <li>Clear and backspace buttons to fix mistakes.</li>
+            <li>A small "expression" line and a bold result display.</li>
+          </ul>
+          <div class="ttt-badges">
+            <span class="ttt-badge">Practice: events & state</span>
+            <span class="ttt-badge">Focus: user-friendly layout</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <template id="tpl-digital-clock">
+    <div class="project-inner">
+      <div class="clock-layout">
+        <div class="clock-screen">
+          <div class="clock-label-row">
+            <span>Digital clock</span>
+            <span id="clockDay">Day</span>
+          </div>
+          <div class="clock-main" id="clockTime">00:00:00</div>
+          <div class="clock-sub">
+            <span id="clockDate">Date</span>
+            <span class="clock-badge">
+              <span class="clock-dot"></span>
+              <span>Live · JavaScript</span>
+            </span>
+          </div>
+        </div>
+        <div class="clock-info">
+          This clock updates once per second using <code>setInterval()</code>.
+          <ul style="margin-top:0.5rem;padding-left:1rem;list-style:square;">
+            <li>Shows hours, minutes and seconds in 24-hour format.</li>
+            <li>Displays the current weekday and full date.</li>
+            <li>Styled with a glowing neon screen to match the portfolio theme.</li>
+          </ul>
+          <div class="ttt-badges">
+            <span class="ttt-badge">Practice: date & time</span>
+            <span class="ttt-badge">Focus: real-time updates</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </template>
+
+            <!-- Dynamic list items -->
+          </ul>
+          <p style="font-size:0.84rem;color:var(--text-muted);margin-top:0.6rem;">
+            This major project represents how I think about education: clear structure, small steps and tools that help students stay consistent and confident.
+          </p>
+        </div>
+      </div>
+    </div>
+  </template>
+
+  <script>
+    (function () {
+      // Scroll reveal
+      const revealItems = document.querySelectorAll(".reveal");
+      const observer = new IntersectionObserver(
+        (entries) => {
+          entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+              entry.target.classList.add("visible");
+              observer.unobserve(entry.target);
+            }
+          });
+        },
+        { threshold: 0.12 }
+      );
+      revealItems.forEach((el) => observer.observe(el));
+
+      // Modal logic
+      const modal = document.getElementById("projectModal");
+      const modalBody = document.getElementById("modalBody");
+      const modalTitle = document.getElementById("modalTitle");
+      const modalKicker = document.getElementById("modalKicker");
+      const modalSubtitle = document.getElementById("modalSubtitle");
+      const modalTech = document.getElementById("modalTech");
+      const modalNote = document.getElementById("modalNote");
+
+      let clockIntervalId = null;
+
+      const projectMeta = {
+        "tic-tac-toe": {
+          title: "Tic Tac Toe · Mini Game",
+          kicker: "Mini project · Game",
+          subtitle: "Playable two-player game with win/draw detection.",
+          tech: "HTML · CSS · JavaScript (game logic)",
+          note: "Try to win or reach a draw. Click reset to start again.",
+          templateId: "tpl-tic-tac-toe",
+        },
+        "image-slider": {
+          title: "Neon Image Slider",
+          kicker: "Mini project · UI component",
+          subtitle: "Gradient-based slides with smooth transitions and indicators.",
+          tech: "HTML · CSS · JavaScript (slider)",
+          note: "Use the Prev / Next buttons or dots to explore the slides.",
+          templateId: "tpl-image-slider",
+        },
+        calculator: {
+          title: "Smart Calculator",
+          kicker: "Mini project · Utility tool",
+          subtitle: "Performs basic arithmetic with a clean neon interface.",
+          tech: "HTML · CSS · JavaScript (calculator)",
+          note: "Click the buttons to build an expression and press = to evaluate.",
+          templateId: "tpl-calculator",
+        },
+        "digital-clock": {
+          title: "Digital Clock",
+          kicker: "Mini project · Real-time",
+          subtitle: "Shows current time, day and date with live updates.",
+          tech: "HTML · CSS · JavaScript (date/time)",
+          note: "Watch the time update every second directly in the modal.",
+          templateId: "tpl-digital-clock",
+        },
+        "gurukulam-hub": {
+          title: "Gurukulam Hub · Education Center",
+          kicker: "Major project · Concept",
+          subtitle: "A structured study environment and digital platform idea.",
+          tech: "Concept · Information architecture · UI thinking",
+          note: "Switch between tracks to see how different batches are organized.",
+          templateId: "tpl-gurukulam-hub",
+        },
+      };
+
+      function openProject(projectKey) {
+        const meta = projectMeta[projectKey];
+        if (!meta) return;
+
+        // Clear previous interval if clock was running
+        if (clockIntervalId) {
+          clearInterval(clockIntervalId);
+          clockIntervalId = null;
+        }
+
+        const template = document.getElementById(meta.templateId);
+        if (!template) return;
+
+        modalBody.innerHTML = template.innerHTML;
+        modalTitle.textContent = meta.title;
+        modalKicker.textContent = meta.kicker;
+        modalSubtitle.textContent = meta.subtitle;
+        modalTech.textContent = meta.tech;
+        modalNote.textContent = meta.note;
+
+        // Initialize project specific JS
+        switch (projectKey) {
+          case "tic-tac-toe":
+            initTicTacToe();
+            break;
+          case "image-slider":
+            initImageSlider();
+            break;
+          case "calculator":
+            initCalculator();
+            break;
+          case "digital-clock":
+            initDigitalClock();
+            break;
+          case "gurukulam-hub":
+            initGurukulamHub();
+            break;
+        }
+
+        modal.classList.add("active");
+      }
+
+      function closeModal() {
+        modal.classList.remove("active");
+        modalBody.innerHTML = "";
+        if (clockIntervalId) {
+          clearInterval(clockIntervalId);
+          clockIntervalId = null;
+        }
+      }
+
+      document.addEventListener("click", (e) => {
+        const projectCard = e.target.closest(".project-card");
+        if (projectCard && projectCard.dataset.project) {
+          openProject(projectCard.dataset.project);
+        }
+
+        if (e.target.matches("[data-close='modal']")) {
+          closeModal();
+        }
+      });
+
+      document.addEventListener("keydown", (e) => {
+        if (e.key === "Escape" && modal.classList.contains("active")) {
+          closeModal();
+        }
+      });
+
+      // Tic Tac Toe
+      function initTicTacToe() {
+        const cells = modalBody.querySelectorAll(".ttt-cell");
+        const statusEl = modalBody.querySelector("#tttStatus");
+        const resetBtn = modalBody.querySelector("#tttReset");
+
+        let board = Array(9).fill("");
+        let currentPlayer = "X";
+        let isGameOver = false;
+
+        const winningCombos = [
+          [0, 1, 2],
+          [3, 4, 5],
+          [6, 7, 8],
+          [0, 3, 6],
+          [1, 4, 7],
+          [2, 5, 8],
+          [0, 4, 8],
+          [2, 4, 6],
+        ];
+
+        function checkWinner() {
+          for (const [a, b, c] of winningCombos) {
+            if (board[a] && board[a] === board[b] && board[a] === board[c]) {
+              return board[a];
+            }
+          }
+          return null;
+        }
+
+        function updateStatus() {
+          const winner = checkWinner();
+          if (winner) {
+            statusEl.textContent = `Player ${winner} wins!`;
+            isGameOver = true;
+          } else if (board.every((cell) => cell)) {
+            statusEl.textContent = "It's a draw.";
+            isGameOver = true;
+          } else {
+            statusEl.textContent = `Player ${currentPlayer}'s turn`;
+          }
+        }
+
+        function handleCellClick(e) {
+          const index = parseInt(e.target.dataset.index, 10);
+          if (isGameOver || board[index]) return;
+          board[index] = currentPlayer;
+          e.target.textContent = currentPlayer;
+          updateStatus();
+          if (!isGameOver) {
+            currentPlayer = currentPlayer === "X" ? "O" : "X";
+          }
+        }
+
+        function resetGame() {
+          board = Array(9).fill("");
+          currentPlayer = "X";
+          isGameOver = false;
+          cells.forEach((cell) => (cell.textContent = ""));
+          updateStatus();
+        }
+
+        cells.forEach((cell) => cell.addEventListener("click", handleCellClick));
+        resetBtn.addEventListener("click", resetGame);
+
+        updateStatus();
+      }
+
+      // Image Slider
+      function initImageSlider() {
+        const track = modalBody.querySelector("#sliderTrack");
+        const dots = modalBody.querySelectorAll(".slider-dot");
+        const prevBtn = modalBody.querySelector("#sliderPrev");
+        const nextBtn = modalBody.querySelector("#sliderNext");
+
+        let currentIndex = 0;
+        const totalSlides = dots.length;
+
+        function updateSlider(index) {
+          currentIndex = (index + totalSlides) % totalSlides;
+          const offset = -currentIndex * 100;
+          track.style.transform = `translateX(${offset}%)`;
+          dots.forEach((dot, i) => {
+            dot.classList.toggle("active", i === currentIndex);
+          });
+        }
+
+        dots.forEach((dot) => {
+          dot.addEventListener("click", () => {
+            const idx = parseInt(dot.dataset.index, 10);
+            updateSlider(idx);
+          });
+        });
+
+        prevBtn.addEventListener("click", () => {
+          updateSlider(currentIndex - 1);
+        });
+
+        nextBtn.addEventListener("click", () => {
+          updateSlider(currentIndex + 1);
+        });
+
+        updateSlider(0);
+      }
+
+      // Calculator
+      function initCalculator() {
+        const buttons = modalBody.querySelectorAll(".calc-btn");
+        const exprEl = modalBody.querySelector("#calcExpression");
+        const resultEl = modalBody.querySelector("#calcResult");
+
+        let expression = "";
+
+        function updateDisplay() {
+          exprEl.textContent = expression;
+        }
+
+        function handleInput(key) {
+          if (key === "C") {
+            expression = "";
+            resultEl.textContent = "0";
+          } else if (key === "DEL") {
+            expression = expression.slice(0, -1);
+          } else if (key === "=") {
+            if (!expression.trim()) return;
+            try {
+              // Evaluate basic math only
+              const cleanExpr = expression.replace(/[^0-9+\-*/.]/g, "");
+              // eslint-disable-next-line no-eval
+              const value = eval(cleanExpr);
+              resultEl.textContent = value !== undefined ? value : "0";
+            } catch (err) {
+              resultEl.textContent = "Error";
+            }
+          } else {
+            expression += key;
+          }
+          updateDisplay();
+        }
+
+        buttons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            const key = btn.dataset.key;
+            handleInput(key);
+          });
+        });
+
+        updateDisplay();
+      }
+
+      // Digital Clock
+      function initDigitalClock() {
+        const timeEl = modalBody.querySelector("#clockTime");
+        const dayEl = modalBody.querySelector("#clockDay");
+        const dateEl = modalBody.querySelector("#clockDate");
+
+        function pad(n) {
+          return n.toString().padStart(2, "0");
+        }
+
+        function updateClock() {
+          const now = new Date();
+          const hours = pad(now.getHours());
+          const minutes = pad(now.getMinutes());
+          const seconds = pad(now.getSeconds());
+          timeEl.textContent = `${hours}:${minutes}:${seconds}`;
+
+          const days = ["Sunday", "Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday"];
+          dayEl.textContent = days[now.getDay()];
+
+          const day = pad(now.getDate());
+          const month = pad(now.getMonth() + 1);
+          const year = now.getFullYear();
+          dateEl.textContent = `${day}/${month}/${year}`;
+        }
+
+        updateClock();
+        clockIntervalId = setInterval(updateClock, 1000);
+      }
+
+      // Gurukulam Hub
+      function initGurukulamHub() {
+        const listEl = modalBody.querySelector("#gurukulamList");
+        const filterButtons = modalBody.querySelectorAll(".filter-btn");
+
+        const data = {
+          
+        };
+
+        function renderTrack(track) {
+          listEl.innerHTML = "";
+          (data[track] || []).forEach((text) => {
+            const li = document.createElement("li");
+            const bullet = document.createElement("span");
+            bullet.className = "gurukulam-bullet";
+            li.appendChild(bullet);
+            const span = document.createElement("span");
+            span.textContent = text;
+            li.appendChild(span);
+            listEl.appendChild(li);
+          });
+        }
+
+        filterButtons.forEach((btn) => {
+          btn.addEventListener("click", () => {
+            filterButtons.forEach((b) => b.classList.remove("active"));
+            btn.classList.add("active");
+            const track = btn.dataset.track;
+            renderTrack(track);
+          });
+        });
+
+        renderTrack("school");
+      }
+
+      // Contact form
+      const contactForm = document.getElementById("contactForm");
+      contactForm.addEventListener("submit", function (e) {
+        e.preventDefault();
+        const name = document.getElementById("name").value.trim();
+        const email = document.getElementById("email").value.trim();
+        const message = document.getElementById("message").value.trim();
+
+        if (!name || !email || !message) {
+          alert("Please fill in your name, email and message before submitting.");
+          return;
+        }
+
+        alert("Thank you, " + name + "! Your message has been recorded for this demo.");
+        contactForm.reset();
+      });
+    })();
+  </script>
+</body>
+</html>
