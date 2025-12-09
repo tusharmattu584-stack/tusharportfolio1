@@ -2095,11 +2095,6 @@
 
         // Initialize project specific JS
         switch (projectKey) {
-          case "tic-tac-toe":
-            initTicTacToe();
-            break;
-          case "image-slider":
-            initImageSlider();
             break;
           case "calculator":
             initCalculator();
@@ -2141,111 +2136,7 @@
         }
       });
 
-      // Tic Tac Toe
-      function initTicTacToe() {
-        const cells = modalBody.querySelectorAll(".ttt-cell");
-        const statusEl = modalBody.querySelector("#tttStatus");
-        const resetBtn = modalBody.querySelector("#tttReset");
-
-        let board = Array(9).fill("");
-        let currentPlayer = "X";
-        let isGameOver = false;
-
-        const winningCombos = [
-          [0, 1, 2],
-          [3, 4, 5],
-          [6, 7, 8],
-          [0, 3, 6],
-          [1, 4, 7],
-          [2, 5, 8],
-          [0, 4, 8],
-          [2, 4, 6],
-        ];
-
-        function checkWinner() {
-          for (const [a, b, c] of winningCombos) {
-            if (board[a] && board[a] === board[b] && board[a] === board[c]) {
-              return board[a];
-            }
-          }
-          return null;
-        }
-
-        function updateStatus() {
-          const winner = checkWinner();
-          if (winner) {
-            statusEl.textContent = `Player ${winner} wins!`;
-            isGameOver = true;
-          } else if (board.every((cell) => cell)) {
-            statusEl.textContent = "It's a draw.";
-            isGameOver = true;
-          } else {
-            statusEl.textContent = `Player ${currentPlayer}'s turn`;
-          }
-        }
-
-        function handleCellClick(e) {
-          const index = parseInt(e.target.dataset.index, 10);
-          if (isGameOver || board[index]) return;
-          board[index] = currentPlayer;
-          e.target.textContent = currentPlayer;
-          updateStatus();
-          if (!isGameOver) {
-            currentPlayer = currentPlayer === "X" ? "O" : "X";
-          }
-        }
-
-        function resetGame() {
-          board = Array(9).fill("");
-          currentPlayer = "X";
-          isGameOver = false;
-          cells.forEach((cell) => (cell.textContent = ""));
-          updateStatus();
-        }
-
-        cells.forEach((cell) => cell.addEventListener("click", handleCellClick));
-        resetBtn.addEventListener("click", resetGame);
-
-        updateStatus();
-      }
-
-      // Image Slider
-      function initImageSlider() {
-        const track = modalBody.querySelector("#sliderTrack");
-        const dots = modalBody.querySelectorAll(".slider-dot");
-        const prevBtn = modalBody.querySelector("#sliderPrev");
-        const nextBtn = modalBody.querySelector("#sliderNext");
-
-        let currentIndex = 0;
-        const totalSlides = dots.length;
-
-        function updateSlider(index) {
-          currentIndex = (index + totalSlides) % totalSlides;
-          const offset = -currentIndex * 100;
-          track.style.transform = `translateX(${offset}%)`;
-          dots.forEach((dot, i) => {
-            dot.classList.toggle("active", i === currentIndex);
-          });
-        }
-
-        dots.forEach((dot) => {
-          dot.addEventListener("click", () => {
-            const idx = parseInt(dot.dataset.index, 10);
-            updateSlider(idx);
-          });
-        });
-
-        prevBtn.addEventListener("click", () => {
-          updateSlider(currentIndex - 1);
-        });
-
-        nextBtn.addEventListener("click", () => {
-          updateSlider(currentIndex + 1);
-        });
-
-        updateSlider(0);
-      }
-
+      
       // Calculator
       function initCalculator() {
         const buttons = modalBody.querySelectorAll(".calc-btn");
@@ -2376,5 +2267,6 @@
   </script>
 </body>
 </html>
+
 
 
